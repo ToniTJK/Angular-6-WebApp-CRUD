@@ -1,0 +1,43 @@
+<div class="col-lg-10 col-lg-offset-1">
+  <h2>{{titulo}}</h2>
+  <hr/>
+
+  <div *ngIf="!productos">
+    Cargando lista de productos....
+  </div>
+
+  <div *ngIf="productos">
+    <div class='row'>
+      <div class='col-lg-3' *ngFor="let producto of productos">
+        <div class="thumbnail">
+          <!-- Si existe la imagen se muestra -->
+          <div class="imagen_container" *ngIf="producto.imagen">
+            <img class="producto_imagen" src="http://localhost:8888/curso-angular6-webapp/cursoAngular6-backend/uploads/{{producto.imagen}}"/>
+          </div>
+          <!-- Si no ... se hace relleno -->
+          <div *ngIf="!producto.imagen">
+            <div class='img_relleno'></div>
+          </div>
+          <div class='caption'>
+            <h3>{{producto.nombre}}</h3>
+            <p>{{producto.precio}} €</p>
+
+            <div class="botones" *ngIf="confirmado != producto.id">
+              <p>
+                <a [routerLink]="['/producto',producto.id]" class='btn btn-md btn-primary'>Ver</a>
+                <a [routerLink]="['/producto-edit',producto.id]" class='btn btn-md btn-warning'>Editar</a>
+                <a (click)="borrarConfirm(producto.id)" class='btn btn-md btn-danger'>Eliminar</a>
+              </p>
+            </div>
+
+            <div class="seguro" *ngIf="confirmado == producto.id">
+                <a (click)="onDeleteProducto(producto.id)" class='btn btn-md btn-danger'>Quiero Eliminarlo</a>
+                <a (click)="cancelarConfirm()" class='btn btn-md btn-warning'>Cancelar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
